@@ -26,7 +26,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.85);
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -35,8 +35,9 @@
     }
 
     nav h1 {
-      color: white;
+      color: #5c6ac4;
       font-size: 1.5rem;
+      font-weight: 700;
     }
 
     nav ul {
@@ -54,6 +55,37 @@
 
     nav ul li a:hover {
       color: #5c6ac4;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 1rem;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 200px;
+    }
+
+    .mobile-menu a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 0;
     }
 
     /* Hero Section */
@@ -76,7 +108,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5);
       z-index: 0;
     }
 
@@ -160,28 +192,8 @@
         display: none;
       }
 
-      nav h1 {
-        font-size: 1.2rem;
-      }
-
-      header h2 {
-        font-size: 2rem;
-      }
-
-      header .tagline {
-        font-size: 1rem;
-      }
-
-      .welcome {
-        flex-direction: column;
-      }
-
-      .welcome img {
-        max-width: 100%;
-      }
-
-      .class-card {
-        max-width: 100%;
+      .hamburger {
+        display: flex;
       }
     }
   </style>
@@ -196,6 +208,16 @@
       <li><a href="offerings.html">Offerings</a></li>
       <li><a href="book.html">Book Now</a></li>
     </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="offerings.html">Offerings</a>
+      <a href="book.html">Book Now</a>
+    </div>
   </nav>
 
   <!-- Hero Section -->
@@ -247,6 +269,13 @@
       </a>
     </div>
   </section>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    }
+  </script>
 </body>
 
 </html>
