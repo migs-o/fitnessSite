@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Balance Yoga & Fitness</title>
+  <title>Flex Fitness</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     * {
@@ -91,6 +91,14 @@
       gap: 2rem;
     }
 
+    .classes-bottom {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
     .class-card {
       background: white;
       padding: 1.5rem;
@@ -140,7 +148,7 @@
   <!-- Hero Section -->
   <header>
     <div>
-      <h1>Balance Yoga & Fitness</h1>
+      <h1>Flex Fitness</h1>
       <p>Find strength, flexibility, and peace — one class at a time.</p>
       <p class="tagline">Strong. Aligned. Empowered.</p>
     </div>
@@ -165,6 +173,7 @@
   <section>
     <h2 style="text-align: center; margin-bottom: 2rem;">Offerings</h2>
     <div class="classes">
+      <!-- Top 3 offerings -->
       <div class="class-card">
         <h3>Movement Assessment & Postural Analysis</h3>
         <p>Includes tailored programming to help you move efficiently and safely.</p>
@@ -177,6 +186,10 @@
         <h3>Private 1-on-1 Strength Training</h3>
         <p>Targeted strength-building sessions designed for your goals and needs.</p>
       </div>
+    </div>
+
+    <!-- Bottom 2 offerings centered -->
+    <div class="classes-bottom">
       <div class="class-card">
         <h3>Meditation & Small Group Session</h3>
         <p>Includes Dharma talk, guided meditation, and journaling exercises.</p>
