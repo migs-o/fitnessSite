@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flex Fitness</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Montserrat', sans-serif;
@@ -20,18 +15,23 @@
       color: #333;
     }
 
-    /* Navbar */
+    /* ✅ Nav Styles */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 1000;
     }
 
     nav h1 {
@@ -53,11 +53,9 @@
       transition: color 0.3s;
     }
 
-    nav ul li a:hover {
-      color: #5c6ac4;
-    }
+    nav ul li a:hover { color: #5c6ac4; }
 
-    /* Hamburger Menu */
+    /* Hamburger */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -88,7 +86,13 @@
       padding: 0.5rem 0;
     }
 
-    /* Hero Section */
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* Header */
     header {
       background: url('hero-image.jpg') center/cover no-repeat;
       height: 100vh;
@@ -97,36 +101,12 @@
       justify-content: center;
       text-align: center;
       color: white;
-      position: relative;
+      flex-direction: column;
       padding: 0 1rem;
     }
 
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 0;
-    }
-
-    header div {
-      position: relative;
-      z-index: 1;
-    }
-
-    header h2 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin-bottom: 1rem;
-    }
-
-    header .tagline {
-      font-weight: 700;
-      font-size: clamp(1rem, 2vw, 1.5rem);
-      margin-top: 0.5rem;
-    }
+    header h1 { font-size: 3rem; margin-bottom: 1rem; }
+    header h2 { font-size: 1.5rem; font-weight: 400; }
 
     section {
       padding: 4rem 2rem;
@@ -134,36 +114,18 @@
       margin: auto;
     }
 
-    /* Welcome Section */
-    .welcome {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      align-items: center;
-      margin-top: 2rem;
-    }
+    .about { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; }
+    .about img { width: 100%; max-width: 400px; border-radius: 10px; }
+    .about-text { flex: 1; }
 
-    .welcome img {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 10px;
-    }
-
-    .welcome-text {
-      flex: 1;
-    }
-
-    /* Offerings Section */
-    .classes {
+    .offerings {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 2rem;
-      margin: 0 auto;
-      max-width: 1000px;
     }
 
-    .class-card {
+    .offering-card {
       background: white;
       padding: 1.5rem;
       border-radius: 10px;
@@ -171,47 +133,34 @@
       flex: 1 1 250px;
       max-width: 300px;
       text-align: center;
+    }
+
+    .offering-card h3 { margin-bottom: 0.5rem; }
+    .offering-card a {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #5c6ac4;
+      color: white;
+      border-radius: 5px;
       text-decoration: none;
-      color: inherit;
-      transition: transform 0.2s, box-shadow 0.2s;
     }
-
-    .class-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    }
-
-    .class-card h3 {
-      margin-bottom: 0.5rem;
-      color: #5c6ac4;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-    }
+    .offering-card a:hover { background: #4a58b0; }
   </style>
 </head>
-
 <body>
-  <!-- Navbar -->
+  <!-- ✅ Nav -->
   <nav>
-    <h1>Flex Fitness</h1>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="offerings.html">Offerings</a></li>
-      <li><a href="book.html">Book Now</a></li>
-    </ul>
-    <div class="hamburger" onclick="toggleMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
+    <div class="nav-container">
+      <h1>Flex Fitness</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="offerings.html">Offerings</a></li>
+        <li><a href="book.html">Book Now</a></li>
+      </ul>
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div><div></div><div></div>
+      </div>
     </div>
     <div class="mobile-menu" id="mobileMenu">
       <a href="index.html">Home</a>
@@ -220,53 +169,53 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <header>
-    <div>
-      <h2>Flex Fitness</h2>
-      <p class="tagline">Strong. Aligned. Empowered.</p>
-    </div>
+    <h1>Flex Fitness</h1>
+    <h2>Strong. Aligned. Empowered.</h2>
   </header>
 
-  <!-- Welcome Section -->
-  <section class="welcome">
-    <div class="welcome-text">
+  <section class="about">
+    <div class="about-text">
       <h2>Welcome!</h2>
       <p>
         I’m here to help you move, feel, and live better. Whether you’re a woman building
-        strength, a couple training side by side, or a small group supporting each other, I create
-        customized sessions that meet you where you are. My approach blends functional fitness with
-        yoga-inspired stretching, mobility work, and corrective exercise to help you recover, prevent
-        injury, and unlock your body’s potential.
+        strength, a couple training side by side, or a small group supporting each other,
+        I create customized sessions that meet you where you are. My approach blends
+        functional fitness with yoga-inspired stretching, mobility work, and corrective
+        exercise to help you recover, prevent injury, and unlock your body’s potential.
       </p>
     </div>
     <img src="about.jpg" alt="Studio Photo" />
   </section>
 
-  <!-- Offerings Section -->
   <section>
-    <h2 style="text-align: center; margin-bottom: 2rem;">Offerings</h2>
-    <div class="classes">
-      <a href="offerings.html#movement-assessment" class="class-card">
-        <h3>Movement Assessment & Postural Analysis</h3>
-        <p>Includes tailored programming to help you move efficiently and safely.</p>
-      </a>
-      <a href="offerings.html#private-yoga" class="class-card">
-        <h3>Private 1-on-1 Yoga Session</h3>
-        <p>Customized yoga sessions for flexibility, strength, and mindfulness.</p>
-      </a>
-      <a href="offerings.html#strength-training" class="class-card">
-        <h3>Private 1-on-1 Strength Training</h3>
-        <p>Targeted strength-building sessions designed for your goals and needs.</p>
-      </a>
-      <a href="offerings.html#meditation" class="class-card">
-        <h3>Meditation & Small Group Session</h3>
-        <p>Includes Dharma talk, guided meditation, and journaling exercises.</p>
-      </a>
-      <a href="offerings.html#beginner-pdf" class="class-card">
-        <h3>Beginner’s Stretch + Strengthen Program PDF</h3>
-        <p>A downloadable program to start building flexibility and strength at home.</p>
-      </a>
+    <h2 style="text-align:center; margin-bottom:2rem;">Our Offerings</h2>
+    <div class="offerings">
+      <div class="offering-card">
+        <h3>Movement Assessment</h3>
+        <p>Postural analysis & tailored programming.</p>
+        <a href="offerings.html">Learn More</a>
+      </div>
+      <div class="offering-card">
+        <h3>Private Yoga</h3>
+        <p>One-on-one yoga session for mobility and calm.</p>
+        <a href="offerings.html">Learn More</a>
+      </div>
+      <div class="offering-card">
+        <h3>Strength Training</h3>
+        <p>1:1 personalized training to build strength safely.</p>
+        <a href="offerings.html">Learn More</a>
+      </div>
+      <div class="offering-card">
+        <h3>Meditation & Journaling</h3>
+        <p>Private or group meditation with Dharma talk.</p>
+        <a href="offerings.html">Learn More</a>
+      </div>
+      <div class="offering-card">
+        <h3>Beginner’s Guide PDF</h3>
+        <p>Stretch & strengthen program to start at home.</p>
+        <a href="offerings.html">Learn More</a>
+      </div>
     </div>
   </section>
 
@@ -277,5 +226,4 @@
     }
   </script>
 </body>
-
 </html>
