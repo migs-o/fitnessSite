@@ -20,6 +20,43 @@
       color: #333;
     }
 
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    nav h1 {
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #5c6ac4;
+    }
+
+    /* Hero Section */
     header {
       background: url('hero-image.jpg') center/cover no-repeat;
       height: 100vh;
@@ -48,7 +85,7 @@
       z-index: 1;
     }
 
-    header h1 {
+    header h2 {
       font-size: clamp(2rem, 5vw, 3rem);
       margin-bottom: 1rem;
     }
@@ -71,6 +108,7 @@
       flex-wrap: wrap;
       gap: 2rem;
       align-items: center;
+      margin-top: 2rem;
     }
 
     .welcome img {
@@ -118,8 +156,16 @@
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.2rem;
+      nav ul {
+        display: none;
+      }
+
+      nav h1 {
+        font-size: 1.2rem;
+      }
+
+      header h2 {
+        font-size: 2rem;
       }
 
       header .tagline {
@@ -142,10 +188,20 @@
 </head>
 
 <body>
+  <!-- Navbar -->
+  <nav>
+    <h1>Flex Fitness</h1>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="offerings.html">Offerings</a></li>
+      <li><a href="book.html">Book Now</a></li>
+    </ul>
+  </nav>
+
   <!-- Hero Section -->
   <header>
     <div>
-      <h1>Flex Fitness</h1>
+      <h2>Flex Fitness</h2>
       <p class="tagline">Strong. Aligned. Empowered.</p>
     </div>
   </header>
