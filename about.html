@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me - Flex Fitness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.6;
+      background: #f8f8f8;
+      color: #333;
+      padding-top: 80px; /* Space for fixed nav */
+    }
+
+    /* Navigation - Reused from index.html */
+    nav {
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      background: rgba(0,0,0,0.85); 
+      z-index: 1000;
+    }
+    .nav-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 1rem 2rem;
+      display: flex; 
+      justify-content: space-between; 
+    }
+    nav h1 { 
+      color: #5c6ac4; 
+      font-size: 1.5rem; 
+      font-weight: 700; 
+      margin: 0;
+    }
+    nav ul { 
+      display: flex; 
+      gap: 1.5rem; 
+      list-style: none; 
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a { 
+      color: white; 
+      text-decoration: none; 
+      font-weight: 500; 
+      transition: color 0.3s;
+      font-size: 1rem;
+    }
+    nav ul li a:hover { 
+      color: #5c6ac4; 
+    }
+    .hamburger { 
+      display: none; 
+      flex-direction: column; 
+      gap: 5px; 
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .hamburger div { 
+      width: 25px; 
+      height: 3px; 
+      background: white;
+      transition: all 0.3s ease;
+    }
+    .mobile-menu { 
+      display: none; 
+      flex-direction: column; 
+      background: rgba(0,0,0,0.9); 
+      padding: 1rem; 
+      position: absolute; 
+      top: 60px; 
+      right: 0; 
+      width: 200px; 
+      border-radius: 0 0 0 8px;
+    }
+    .mobile-menu a { 
+      color: white; 
+      text-decoration: none; 
+      padding: 0.75rem 1rem; 
+      transition: background 0.3s;
+    }
+    .mobile-menu a:hover {
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+    
+    .about-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .about-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+    
+    .about-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .about-section h2 {
+      color: #5c6ac4;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+    
+    .about-section p {
+      margin-bottom: 1.2rem;
+      line-height: 1.8;
+    }
+    
+    .certifications {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .cert-card {
+      background: #f9f9f9;
+      border-left: 4px solid #5c6ac4;
+      padding: 1.5rem;
+      border-radius: 0 5px 5px 0;
+    }
+    
+    .cert-card h3 {
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .cert-card p {
+      color: #666;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+    
+    .experience-timeline {
+      position: relative;
+      padding-left: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2rem;
+      padding-left: 2rem;
+      border-left: 2px solid #5c6ac4;
+    }
+    
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+    
+    .timeline-item:before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #5c6ac4;
+      left: -9px;
+      top: 0;
+    }
+    
+    .timeline-item h3 {
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    
+    .timeline-item .date {
+      color: #5c6ac4;
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .social-links a {
+      color: #5c6ac4;
+      font-size: 1.5rem;
+      transition: transform 0.3s;
+    }
+    
+    .social-links a:hover {
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 768px) {
+      nav ul { 
+        display: none; 
+      }
+      
+      .hamburger { 
+        display: flex; 
+      }
+      
+      .about-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .about-section {
+        padding: 1.5rem;
+      }
+      
+      .certifications {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <h1><a href="index.html" style="color:#5c6ac4; text-decoration:none;">Flex Fitness</a></h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" class="active">About Me</a></li>
+        <li><a href="offerings.html">Offerings</a></li>
+        <li><a href="book.html">Book Now</a></li>
+      </ul>
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div><div></div><div></div>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About Me</a>
+      <a href="offerings.html">Offerings</a>
+      <a href="book.html">Book Now</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/hero-image.jpg') center/cover no-repeat; height: 30vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 0 1rem; margin-top: 60px;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Meet Your Trainer</h1>
+    <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem;">Helping you achieve your fitness goals with personalized training and expert guidance</p>
+  </header>
+
+  <div class="about-container">
+    <!-- About Me Section -->
+    <section class="about-section">
+      <h2>My Story</h2>
+      <p>Hi, I'm [Your Name], a certified personal trainer with [X] years of experience in the fitness industry. My journey in fitness began [brief personal story about how you got into fitness].</p>
+      
+      <p>I believe in a holistic approach to health and wellness, focusing not just on physical strength but also on mental well-being and sustainable lifestyle changes. My training philosophy centers around [brief description of your training philosophy].</p>
+      
+      <p>When I'm not training clients, you can find me [personal interests related to fitness or wellness]. I'm passionate about helping others discover their strength and achieve their fitness goals in a supportive and empowering environment.</p>
+      
+      <div class="social-links">
+        <a href="https://www.instagram.com/flex_fitness_with_chanel_/" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <!-- Add more social links as needed -->
+      </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="about-section">
+      <h2>Certifications & Education</h2>
+      <p>I hold the following certifications and have completed extensive education in the field of fitness and wellness:</p>
+      
+      <div class="certifications">
+        <div class="cert-card">
+          <h3>Certified Personal Trainer</h3>
+          <p>National Academy of Sports Medicine (NASM)</p>
+          <p class="date">Certified Since: 2020</p>
+        </div>
+        
+        <div class="cert-card">
+          <h3>Yoga Instructor</h3>
+          <p>Yoga Alliance RYT-200</p>
+          <p class="date">Certified Since: 2019</p>
+        </div>
+        
+        <div class="cert-card">
+          <h3>Nutrition Specialist</h3>
+          <p>Precision Nutrition</p>
+          <p class="date">Certified Since: 2021</p>
+        </div>
+        
+        <!-- Add more certifications as needed -->
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="about-section">
+      <h2>Experience & Background</h2>
+      <p>With years of experience in the fitness industry, I've had the privilege of working with clients of all fitness levels and backgrounds. Here's a glimpse of my professional journey:</p>
+      
+      <div class="experience-timeline">
+        <div class="timeline-item">
+          <span class="date">2021 - Present</span>
+          <h3>Owner & Head Trainer</h3>
+          <p>Flex Fitness, [Your Location]</p>
+          <p>Providing personalized training programs and wellness coaching to help clients achieve their fitness goals.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="date">2019 - 2021</span>
+          <h3>Senior Fitness Coach</h3>
+          <p>Elite Fitness Center, [City]</p>
+          <p>Led group fitness classes and provided one-on-one training to clients with diverse fitness goals.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="date">2017 - 2019</span>
+          <h3>Yoga Instructor</h3>
+          <p>Serenity Yoga Studio, [City]</p>
+          <p>Taught various yoga styles including Vinyasa, Hatha, and Restorative yoga to practitioners of all levels.</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Training Philosophy Section -->
+    <section class="about-section">
+      <h2>My Training Philosophy</h2>
+      <p>I believe that fitness should be accessible, enjoyable, and sustainable. My approach combines evidence-based training methods with personalized attention to help you:</p>
+      
+      <ul style="margin: 1rem 0 1rem 2rem;">
+        <li style="margin-bottom: 0.8rem;">Build strength and confidence in your body</li>
+        <li style="margin-bottom: 0.8rem;">Develop healthy, sustainable habits</li>
+        <li style="margin-bottom: 0.8rem;">Prevent injuries through proper form and technique</li>
+        <li style="margin-bottom: 0.8rem;">Achieve your unique fitness goals at your own pace</li>
+      </ul>
+      
+      <p>Whether you're new to fitness or looking to take your training to the next level, I'm here to provide the guidance, support, and accountability you need to succeed.</p>
+      
+      <a href="book.html" style="display: inline-block; margin-top: 1.5rem; padding: 0.8rem 1.5rem; background: #5c6ac4; color: white; text-decoration: none; border-radius: 5px; font-weight: 600; transition: background 0.3s;">Book a Session</a>
+    </section>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.querySelector('.mobile-menu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+</body>
+</html>
