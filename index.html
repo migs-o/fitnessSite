@@ -176,11 +176,204 @@
     </div>
   </section>
 
+  <!-- Instagram Feed Section -->
+  <section style="background: #f8f8f8; padding: 4rem 1rem; text-align: center;" id="instagram-feed">
+    <h2 style="color: #5c6ac4; margin-bottom: 2rem;">Follow Our Journey on Instagram</h2>
+    <div id="instafeed" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; padding: 1rem;">
+      <!-- Loading state -->
+      <div id="insta-loading" style="grid-column: 1 / -1; padding: 2rem;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <p>Loading Instagram feed...</p>
+      </div>
+      <!-- Error state (hidden by default) -->
+      <div id="insta-error" style="display: none; grid-column: 1 / -1; padding: 2rem;">
+        <div style="font-size: 2rem; color: #e74c3c; margin-bottom: 1rem;">
+          <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <p>Unable to load Instagram feed. Please check out our Instagram page below!</p>
+      </div>
+      <!-- Instagram posts will be dynamically inserted here -->
+    </div>
+    <div style="margin-top: 2rem;">
+      <a href="https://www.instagram.com/flex_fitness_with_chanel_/" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="instagram-button"
+         style="display: inline-flex; 
+                align-items: center;
+                background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); 
+                color: white; 
+                padding: 0.8rem 1.8rem; 
+                border-radius: 30px; 
+                text-decoration: none; 
+                font-weight: 600; 
+                margin-top: 1rem;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <i class="fab fa-instagram" style="margin-right: 10px; font-size: 1.2em;"></i> @flex_fitness_with_chanel_
+      </a>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0-rc3/dist/instafeed.min.js"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <script>
     function toggleMenu() {
       const menu = document.getElementById("mobileMenu");
       menu.style.display = menu.style.display === "flex" ? "none" : "flex";
     }
+
+    // Instagram Feed Implementation
+    document.addEventListener('DOMContentLoaded', function() {
+      const instaFeed = document.getElementById('instafeed');
+      const loadingEl = document.getElementById('insta-loading');
+      const errorEl = document.getElementById('insta-error');
+      
+      // This is a client-side only implementation that fetches the user's public feed
+      // Note: For a production site, you should set up a server-side solution
+      // to properly authenticate with Instagram's API and keep your access token secure
+      
+      // Function to create Instagram post element
+      function createPostElement(post) {
+        const postElement = document.createElement('div');
+        postElement.className = 'instagram-post';
+        postElement.style.position = 'relative';
+        postElement.style.borderRadius = '8px';
+        postElement.style.overflow = 'hidden';
+        postElement.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+        postElement.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+        
+        const imageUrl = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
+        
+        postElement.innerHTML = `
+          <a href="${post.permalink}" target="_blank" rel="noopener noreferrer" style="display: block; position: relative; padding-bottom: 100%;">
+            <img 
+              src="${imageUrl}" 
+              alt="${post.caption || 'Instagram post'}" 
+              style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+              "
+              loading="lazy"
+            >
+            <div style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: rgba(0,0,0,0.4);
+              opacity: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+              transition: opacity 0.3s ease;">
+              <div style="text-align: center; padding: 1rem;">
+                <div style="display: flex; justify-content: center; margin-bottom: 5px;">
+                  <i class="fas fa-heart" style="margin-right: 8px;"></i>
+                  <span style="font-weight: 600;">${post.like_count || 0}</span>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                  <i class="fas fa-comment" style="margin-right: 8px;"></i>
+                  <span>${post.comments_count || 0}</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        `;
+        
+        // Add hover effects
+        postElement.onmouseover = function() {
+          this.style.transform = 'translateY(-5px)';
+          this.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+          this.querySelector('div').style.opacity = '1';
+        };
+        
+        postElement.onmouseout = function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+          this.querySelector('div').style.opacity = '0';
+        };
+        
+        return postElement;
+      }
+      
+      // Function to handle errors
+      function showError() {
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+      }
+      
+      // For demo purposes, we'll use a placeholder function
+      // In a real implementation, you would make an API call to your backend
+      // which would then authenticate with Instagram's API
+      function fetchInstagramPosts() {
+        // This is a placeholder for the actual API call
+        // In a production environment, you would make a request to your backend
+        // which would handle the Instagram API authentication
+        
+        // Simulate API call with timeout
+        setTimeout(() => {
+          try {
+            // This is where you would process the actual API response
+            // For now, we'll show the error state since we don't have an access token
+            showError();
+            
+            // In a real implementation, you would do something like:
+            // fetch('/api/instagram/feed')
+            //   .then(response => response.json())
+            //   .then(data => {
+            //     loadingEl.style.display = 'none';
+            //     data.forEach(post => {
+            //       instaFeed.appendChild(createPostElement(post));
+            //     });
+            //   })
+            //   .catch(error => {
+            //     console.error('Error fetching Instagram feed:', error);
+            //     showError();
+            //   });
+            
+          } catch (error) {
+            console.error('Error processing Instagram feed:', error);
+            showError();
+          }
+        }, 1500);
+      }
+      
+      // Initialize the Instagram feed
+      fetchInstagramPosts();
+    });
   </script>
+  
+  <style>
+    /* Instagram feed hover effects */
+    .instagram-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    
+    /* Responsive grid for Instagram feed */
+    @media (max-width: 768px) {
+      #instafeed {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      #instafeed {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </body>
 </html>
