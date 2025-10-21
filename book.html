@@ -1,115 +1,425 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book a Class - Flex Fitness</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Book a Session — Flex Fitness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
+    /* --- Design tokens --- */
+    :root {
+      --bg: #fbfbfd;
+      --muted: #6b7280;
+      --card: #fff;
+      --accent-a: #5c6ac4;
+      --accent-b: #8b5cf6;
+      --radius: 20px;
+      --max: 1200px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { 
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif;
       line-height: 1.6;
-      background: #f8f8f8;
-      color: #333;
+      color: #0b1220;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg), #f3f5ff 120px);
+      padding-top: 80px;
     }
 
-    /* ✅ Nav Styles */
-    nav {
-      position: fixed; top:0; left:0; width:100%; background: rgba(0,0,0,0.85); z-index:1000;
-    }
-    .nav-container {
-      max-width: 1200px; margin:0 auto; padding:1rem 2rem;
-      display:flex; justify-content:space-between; align-items:center;
-    }
-    nav h1 { color:#5c6ac4; font-size:1.5rem; font-weight:700; }
-    nav ul { display:flex; gap:1.5rem; list-style:none; }
-    nav ul li a { 
-      color: white; 
-      text-decoration: none; 
-      font-weight: 500; 
-      transition: color 0.3s;
-      position: relative;
-      padding: 0.5rem 0;
-    }
-    nav ul li a:hover,
-    nav ul li a.active {
-      color: #5c6ac4;
-    }
-    nav ul li a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
+    /* Header */
+    header.site-nav {
+      position: fixed;
+      top: 0;
       left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand .mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+    }
+
+    .brand-text .brand-title {
+      font-weight: 700;
+      font-size: 18px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .brand-text .brand-subtitle {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    nav.links { 
+      display: flex; 
+      gap: 18px; 
+      align-items: center; 
+    }
+
+    nav.links a {
+      color: rgba(11,18,32,0.85);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.2s ease;
+    }
+
+    nav.links a:hover,
+    nav.links a.active {
+      color: var(--accent-a);
+    }
+
+    .cta {
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(92, 106, 196, 0.2);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 40px;
+      height: 28px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1001;
+    }
+
+    .mobile-menu-btn span {
+      display: block;
       width: 100%;
-      height: 2px;
-      background: #5c6ac4;
+      height: 3px;
+      background: var(--accent-a);
+      border-radius: 3px;
+      transition: all 0.3s ease;
     }
-    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
-    .hamburger div { width:25px; height:3px; background:white; }
-    .mobile-menu { display:none; flex-direction:column; background:rgba(0,0,0,0.9); padding:1rem; position:absolute; top:60px; right:0; width:200px; }
-    .mobile-menu a { 
-      color: white; 
-      text-decoration: none; 
-      padding: 0.75rem 1rem;
-      border-radius: 4px;
-      margin: 0.25rem 0;
-      transition: all 0.3s;
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
+      background: white;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+      padding: 100px 24px 40px;
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
     }
+
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 14px 0;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 17px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transition: color 0.2s ease;
+    }
+
     .mobile-menu a:hover,
     .mobile-menu a.active {
-      background: rgba(255,255,255,0.1);
-      color: #5c6ac4;
+      color: var(--accent-a);
     }
 
-    @media(max-width:768px){
-      nav ul { display:none; }
-      .hamburger { display:flex; }
+    .mobile-menu .cta {
+      margin-top: 20px;
+      text-align: center;
+      border-radius: 8px;
+      padding: 12px;
     }
 
-    /* Page content */
-    .container { max-width:1000px; margin:120px auto 2rem; padding:2rem; background:white; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-    h2 { color:#5c6ac4; text-align:center; margin-bottom:2rem; }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
 
-    iframe { width:100%; height:600px; border:0; }
+    .overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: flex;
+      }
+      
+      nav.links {
+        display: none;
+      }
+      
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      line-height: 1.2;
+      margin: 0 0 20px;
+      color: #071126;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+      margin: 0 auto 30px;
+      max-width: 700px;
+    }
+
+    /* Booking Section */
+    .booking-section {
+      padding: 60px 0;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      margin: 40px auto;
+      max-width: var(--max);
+    }
+
+    .booking-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #071126;
+    }
+
+    .booking-iframe {
+      width: 100%;
+      height: 800px;
+      border: 0;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+      
+      .hero p {
+        font-size: 16px;
+      }
+      
+      .booking-iframe {
+        height: 1000px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- ✅ Nav -->
-  <nav>
-    <div class="nav-container">
-      <h1><a href="index.html" style="color:#5c6ac4; text-decoration:none;">Flex Fitness</a></h1>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="offerings.html">Offerings</a></li>
-        <li><a href="book.html" class="active">Book Now</a></li>
-      </ul>
-      <div class="hamburger" onclick="toggleMenu()">
-        <div></div><div></div><div></div>
-      </div>
+  <!-- Navigation -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="Flex Fitness Home">
+        <div class="mark">F</div>
+        <div class="brand-text">
+          <div class="brand-title">Flex Fitness</div>
+          <div class="brand-subtitle">Training • Yoga</div>
+        </div>
+      </a>
+      
+      <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <nav class="links" aria-label="Primary Navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="offerings.html">Offerings</a>
+        <a href="book.html" class="active">Book Now</a>
+      </nav>
     </div>
+    
+    <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
       <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
+      <a href="about.html">About</a>
       <a href="offerings.html">Offerings</a>
       <a href="book.html" class="active">Book Now</a>
     </div>
-  </nav>
+    <div class="overlay" id="overlay"></div>
+  </header>
 
-  <div class="container">
-    <h2>Book a Class</h2>
-    <div style="display:flex; justify-content:center;">
-      <iframe id="calendly-iframe" src="https://calendly.com/mikeortiz-ofpv" allowfullscreen></iframe>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Book Your Session</h1>
+        <p>Ready to start your fitness journey? Book a session with us today and take the first step towards a healthier, stronger you.</p>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section class="booking-section">
+    <div class="booking-container">
+      <h2 class="section-title">Schedule Your Workout</h2>
+      <iframe 
+        id="calendly-iframe" 
+        class="booking-iframe" 
+        src="https://calendly.com/mikeortiz-ofpv" 
+        allowfullscreen
+        title="Schedule your session">
+      </iframe>
+    </div>
+  </section>
 
   <script>
+    // Mobile menu functionality
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('overlay');
+    let menuOpen = false;
+
     function toggleMenu() {
-      const menu = document.getElementById("mobileMenu");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      overlay.classList.toggle('visible', menuOpen);
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+      
+      // Animate hamburger icon
+      const spans = mobileMenuBtn.querySelectorAll('span');
+      if (menuOpen) {
+        spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+      } else {
+        spans[0].style.transform = '';
+        spans[1].style.opacity = '';
+        spans[2].style.transform = '';
+      }
     }
+
+    // Close menu when clicking on a link
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (menuOpen) toggleMenu();
+      });
+    });
+
+    // Close menu when clicking on overlay
+    overlay.addEventListener('click', toggleMenu);
+
+    // Close menu when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuOpen) {
+        toggleMenu();
+      }
+    });
+
+    // Function to handle Calendly iframe resizing
+    function handleCalendlyResize() {
+      const iframe = document.getElementById('calendly-iframe');
+      if (iframe) {
+        const width = iframe.offsetWidth;
+        if (width < 768) {
+          iframe.style.height = '1000px';
+        } else {
+          iframe.style.height = '800px';
+        }
+      }
+    }
+
+    // Initial resize
+    window.addEventListener('load', handleCalendlyResize);
+    window.addEventListener('resize', handleCalendlyResize);
 
     // Optional: if you want buttons on offerings page to auto-set the class
     function openCalendly(classType) {

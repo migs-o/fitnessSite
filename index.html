@@ -1,248 +1,860 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flex Fitness</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flex Fitness — Fluid Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* --- Design tokens --- */
+    :root{
+      --bg:#fbfbfd;
+      --muted:#6b7280;
+      --card:#fff;
+      --accent-a: #5c6ac4; /* indigo */
+      --accent-b: #8b5cf6; /* violet */
+      --radius:20px;
+      --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;line-height:1.6;color:#0b1220;margin:0;background:linear-gradient(180deg,var(--bg),#f3f5ff 120px)}
 
+    /* Header */
     body {
-      font-family: 'Montserrat', sans-serif;
-      line-height: 1.6;
-      background: #f8f8f8;
-      color: #333;
+      padding-top: 10px; /* Reduced padding to decrease space between header and content */
     }
-
-    /* ✅ Nav Styles */
-    nav {
-      position: fixed; top:0; left:0; width:100%; background: rgba(0,0,0,0.85); z-index:1000;
-    }
-    .nav-container {
-      max-width: 1200px; margin:0 auto; padding:1rem 2rem;
-      display:flex; justify-content:space-between; align-items:center;
-    }
-    nav h1 { color:#5c6ac4; font-size:1.5rem; font-weight:700; }
-    nav ul { display:flex; gap:1.5rem; list-style:none; }
-    nav ul li a { 
-      color: white; 
-      text-decoration: none; 
-      font-weight: 500; 
-      transition: color 0.3s;
-      position: relative;
-      padding: 0.5rem 0;
-    }
-    nav ul li a:hover,
-    nav ul li a.active {
-      color: #5c6ac4;
-    }
-    nav ul li a.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
+    
+    header.site-nav {
+      position: fixed;
+      top: 0;
       left: 0;
-      width: 100%;
-      height: 2px;
-      background: #5c6ac4;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.98);
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
-    .hamburger div { width:25px; height:3px; background:white; }
-    .mobile-menu { display:none; flex-direction:column; background:rgba(0,0,0,0.9); padding:1rem; position:absolute; top:60px; right:0; width:200px; }
-    .mobile-menu a { 
-      color: white; 
-      text-decoration: none; 
-      padding: 0.75rem 1rem;
-      border-radius: 4px;
-      margin: 0.25rem 0;
-      transition: all 0.3s;
-    }
-    .mobile-menu a:hover,
-    .mobile-menu a.active {
-      background: rgba(255,255,255,0.1);
-      color: #5c6ac4;
-    }
+    .nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 20px}
+    .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
+    .brand .mark{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent-a),var(--accent-b));display:grid;place-items:center;color:white;font-weight:700;font-family:Playfair Display}
+    nav.links{display:flex;gap:18px;align-items:center}
+    nav.links a{color:rgba(11,18,32,0.85);text-decoration:none;font-weight:600}
+    .cta{padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;text-decoration:none;font-weight:700}
 
-    @media(max-width:768px){
-      nav ul { display:none; }
-      .hamburger { display:flex; }
-    }
-
+    /* Fluid hero (asymmetrical) */
     /* Hero Section */
-    header {
-      background: url('hero-image.jpg') center/cover no-repeat;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-      padding: 0 1rem;
+    .hero {
+      padding: 100px 0;
+      position: relative;
+      z-index: 1;
     }
-    header h1 { font-size: 3rem; margin-bottom: 1rem; }
-    header h2 { font-size: 1.5rem; font-weight: 400; }
 
-    /* Welcome/About Section */
-    .about {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
+    .hero .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       align-items: center;
-      max-width: 1000px;
-      margin: 4rem auto;
-      padding: 0 2rem;
     }
-    .about-text { flex: 1; }
-    .about-text p { margin-bottom: 1rem; }
-    .about img {
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      line-height: 1.1;
+      margin: 14px 0 20px;
+      color: #071126;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .location {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .hero-image {
+      position: relative;
       width: 100%;
-      max-width: 400px;
-      border-radius: 10px;
-      margin-left: 2rem;
-    }
-    @media (max-width:768px){
-      .about { flex-direction: column; text-align: center; }
-      .about img { margin-left:0; margin-top:1.5rem; }
+      max-width: 520px;
+      margin: 0 auto;
     }
 
-    /* Offerings Grid */
-    .offerings {
+    .image-wrapper {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(11, 18, 32, 0.08);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .badge {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* About Section */
+    .about {
+      padding: 100px 0;
+      background-color: var(--bg);
+      position: relative;
+      z-index: 2;
+    }
+
+    .about .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #071126;
+    }
+
+    .about p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .about-actions {
       display: flex;
-      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .image-frame {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(11, 18, 32, 0.06);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      gap: 2rem;
-      max-width: 1000px;
-      margin: 4rem auto;
-      padding: 0 2rem;
-    }
-    .offering-card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      flex: 1 1 250px;
-      max-width: 300px;
-      text-align: center;
-    }
-    .offering-card h3 { margin-bottom: 0.5rem; }
-    .offering-card a {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: #5c6ac4;
-      color: white;
-      border-radius: 5px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
       text-decoration: none;
+      transition: all 0.2s ease;
     }
-    .offering-card a:hover { background: #4a58b0; }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(92, 106, 196, 0.3);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--accent-a);
+      border: 1px solid var(--accent-a);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(11, 18, 32, 0.1);
+    }
+
+    .btn-outline:hover {
+      background: rgba(11, 18, 32, 0.02);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .hero .container,
+      .about .container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+      }
+
+      .hero-actions,
+      .about-actions {
+        justify-content: center;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .hero-image {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 80px 0;
+      }
+
+      .about {
+        padding: 80px 0;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero-actions,
+      .about-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    /* Content sections */
+    section{max-width:var(--max);margin:60px auto;padding:40px 24px}
+    .split{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:start}
+
+    .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{background:var(--card);padding:18px;border-radius:15px;box-shadow:0 14px 30px rgba(11,18,32,0.04);transition:transform .28s ease;transform:scale(0.95);transform-origin:center;margin:-4px 0;}
+    .card:hover{transform:scale(0.97) translateY(-4px)}
+    .card h3{margin:8px 0;color:var(--accent-b);font-size:1em}
+    .card p{color:var(--muted);font-size:1em;margin:8px 0}
+    .card a{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:8px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:white;text-decoration:none;font-weight:600;font-size:0.9em}
+
+    /* Testimonials + logos */
+    .testimonials{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start}
+    .quote{font-style:italic;font-size:18px;color:#071126}
+    .logos{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+    .logos img{height:34px;opacity:0.85;border-radius:6px}
+
+    /* Newsletter */
+    .newsletter{display:flex;gap:12px;align-items:center}
+    .newsletter input{flex:1;padding:12px 14px;border-radius:12px;border:1px solid rgba(11,18,32,0.06)}
+    .newsletter button{padding:12px 14px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;font-weight:700}
+
+    footer{padding:40px 24px;text-align:center;color:var(--muted)}
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 12px 8px;
+      z-index: 1001;
+      width: 40px;
+      height: 40px;
+    }
+    
+    .mobile-menu-btn span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: var(--accent-a);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 85%;
+      max-width: 320px;
+      height: 100vh;
+      background: white;
+      box-shadow: -5px 0 25px rgba(0,0,0,0.15);
+      padding: 100px 24px 40px;
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    
+    .mobile-menu a {
+      display: block;
+      padding: 16px 0;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+    }
+    
+    .mobile-menu a:active {
+      background: rgba(0,0,0,0.02);
+      transform: translateX(4px);
+    }
+    
+    .mobile-menu .cta {
+      margin: 24px 0 0;
+      padding: 14px;
+      text-align: center;
+      border-radius: 12px;
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      color: white !important;
+      border: none;
+    }
+    
+    .overlay {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-in-out;
+    }
+    
+    .overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .hero {
+        padding: 80px 24px;
+      }
+      
+      .hero h1 {
+        font-size: 42px;
+      }
+      
+      .cards-grid {
+        gap: 16px;
+      }
+    }
+    
+    @media (max-width: 1000px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 60px 20px;
+        margin-top: 80px;
+      }
+      
+      .hero .panel {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      
+      .split {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .testimonials {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      :root {
+        --radius: 16px;
+      }
+      
+      .nav-inner {
+        padding: 0 16px;
+        height: 70px;
+      }
+      
+      .brand .mark {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+      
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      
+      .brand-title {
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+      
+      .brand-subtitle {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 1px;
+        letter-spacing: 0.3px;
+      }
+      
+      .links {
+        display: none !important;
+      }
+      
+      .mobile-menu-btn {
+        display: flex;
+      }
+      
+      .hero {
+        padding: 40px 16px;
+        margin-top: 60px;
+      }
+      
+      .hero h1 {
+        font-size: 36px;
+        margin: 12px 0 16px;
+      }
+      
+      .hero p {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      
+      .panel {
+        height: 360px;
+        border-radius: 16px;
+      }
+      
+      .card {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      
+      .card h3 {
+        font-size: 18px;
+        margin: 8px 0;
+      }
+      
+      .card p {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      
+      .cta {
+        padding: 10px 16px;
+        font-size: 14px;
+        border-radius: 10px;
+      }
+      
+      section {
+        padding: 40px 16px;
+        margin: 40px auto;
+      }
+      
+      .quote {
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      
+      .logos img {
+        height: 28px;
+      }
+      
+      footer {
+        padding: 40px 16px;
+      }
+    }
+    
+    @media (max-width: 560px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .hero h1 {
+        font-size: 32px;
+      }
+      
+      .hero .actions {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .hero .actions .cta {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .panel {
+        height: 300px;
+      }
+      
+      .testimonials {
+        gap: 24px;
+      }
+      
+      .newsletter {
+        flex-direction: column;
+      }
+      
+      .newsletter input,
+      .newsletter button {
+        width: 100%;
+      }
+      
+      .panel {
+        height: 350px;
+      }
+      
+      .newsletter {
+        flex-direction: column;
+      }
+      
+      .newsletter button {
+        width: 100%;
+      }
+      
+      .actions {
+        flex-direction: column;
+        gap: 12px !important;
+      }
+      
+      .btn-primary, .btn-ghost {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .mobile-menu {
+        width: 85%;
+      }
+    }
+
+    /* subtle entrance animations */
+    .reveal{opacity:0;transform:translateY(24px);transition:all .7s ease}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* parallax helper */
+    .parallax{will-change:transform}
   </style>
 </head>
 <body>
-  <!-- ✅ Nav -->
-  <nav>
-    <div class="nav-container">
-      <h1><a href="index.html" style="color:#5c6ac4; text-decoration:none;">Flex Fitness</a></h1>
-      <ul>
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="offerings.html">Offerings</a></li>
-        <li><a href="book.html">Book Now</a></li>
-      </ul>
-      <div class="hamburger" onclick="toggleMenu()">
-        <div></div><div></div><div></div>
-      </div>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="offerings.html">Offerings</a>
-      <a href="book.html">Book Now</a>
-    </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <header>
-    <h1>Flex Fitness</h1>
-    <h2>Strong. Aligned. Empowered.</h2>
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="#" aria-label="Flex Fitness Home">
+        <div class="mark">F</div>
+        <div class="brand-text">
+          <div class="brand-title">Flex Fitness</div>
+          <div class="brand-subtitle">Training • Yoga</div>
+        </div>
+      </a>
+      <nav class="links" aria-label="Primary Navigation">
+        <a href="#about">About</a>
+        <a href="#offerings">Offerings</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact" class="cta">Book Now</a>
+      </nav>
+      <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </header>
 
-  <!-- Welcome/About Section -->
-  <section class="about">
-    <div class="about-text">
-      <h2>Welcome!</h2>
-      <p>I’m here to help you move, feel, and live better. Whether you’re a woman building strength, a couple training side by side, or a small group supporting each other, I create customized sessions that meet you where you are.</p>
-      <p>My approach blends functional fitness with yoga-inspired stretching, mobility work, and corrective exercise to help you recover, prevent injury, and unlock your body’s potential.</p>
-    </div>
-    <img src="about.jpg" alt="Studio Photo" />
-  </section>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile Navigation">
+    <a href="#about" class="menu-link">About</a>
+    <a href="#offerings" class="menu-link">Offerings</a>
+    <a href="#testimonials" class="menu-link">Testimonials</a>
+    <a href="#contact" class="cta menu-link">Book Now</a>
+  </div>
+  <div class="overlay" id="overlay" role="presentation" aria-hidden="true"></div>
 
-  <!-- Offerings Section -->
-  <section>
-    <h2 style="text-align:center; margin-bottom:2rem;">Our Offerings</h2>
-    <div class="offerings">
-      <div class="offering-card">
-        <h3>Movement Assessment</h3>
-        <p>Postural analysis & tailored programming.</p>
-        <a href="offerings.html">Learn More</a>
-      </div>
-      <div class="offering-card">
-        <h3>Private Yoga</h3>
-        <p>One-on-one yoga session for mobility and calm.</p>
-        <a href="offerings.html">Learn More</a>
-      </div>
-      <div class="offering-card">
-        <h3>Strength Training</h3>
-        <p>1:1 personalized training to build strength safely.</p>
-        <a href="offerings.html">Learn More</a>
-      </div>
-      <div class="offering-card">
-        <h3>Meditation & Journaling</h3>
-        <p>Private or group meditation with Dharma talk.</p>
-        <a href="offerings.html">Learn More</a>
-      </div>
-      <div class="offering-card">
-        <h3>Beginner’s Guide PDF</h3>
-        <p>Stretch & strengthen program to start at home.</p>
-        <a href="offerings.html">Learn More</a>
-      </div>
-    </div>
-  </section>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow reveal">Personal Training</div>
+          <h1 class="reveal">Strong. Aligned. Empowered.</h1>
+          <p class="reveal">Helping you move, feel, and live better — customized sessions that blend functional fitness, mobility, and mindful practice. Programs for individuals, couples, and small groups.</p>
+          
+          <div class="hero-actions reveal">
+            <a href="#contact" class="btn btn-primary">Book Now</a>
+            <a href="#offerings" class="btn btn-secondary">See Programs</a>
+          </div>
 
-  <!-- Instagram Link Section -->
-  <section style="background: #f8f8f8; padding: 4rem 1rem; text-align: center;">
-    <h2 style="color: #5c6ac4; margin-bottom: 2rem;">Follow Us on Instagram</h2>
-    <div style="margin-top: 1rem;">
-      <a href="https://www.instagram.com/flex_fitness_with_chanel_/" 
-         target="_blank" 
-         rel="noopener noreferrer"
-         style="display: inline-flex; 
-                align-items: center;
-                background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D); 
-                color: white; 
-                padding: 0.8rem 1.8rem; 
-                border-radius: 30px; 
-                text-decoration: none; 
-                font-weight: 600; 
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <i class="fab fa-instagram" style="margin-right: 10px; font-size: 1.2em;"></i> @flex_fitness_with_chanel_
-      </a>
-    </div>
-  </section>
+          <div class="location reveal">
+            <span>Serving Lakewood & Denver areas</span>
+          </div>
+        </div>
 
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+        <div class="hero-image">
+          <div class="image-wrapper">
+            <img src="pose.jpg" alt="Fitness pose">
+            <div class="badge">In Person & Online</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-content">
+          <h2>Welcome</h2>
+          <p>I'm here to help you move, feel, and live better. Whether you're a woman building strength, a couple training side by side, or a small group supporting each other, I create customized sessions that meet you where you are.</p>
+          <p>My approach blends functional fitness with yoga-inspired stretching, mobility work, and corrective exercise to help you recover, prevent injury, and unlock your body's potential.</p>
+          
+          <div class="about-actions">
+            <a href="#offerings" class="btn btn-primary">Explore programs</a>
+            <a href="#contact" class="btn btn-outline">Contact</a>
+          </div>
+        </div>
+
+        <div class="about-image">
+          <div class="image-frame">
+            <img src="pose.jpg" alt="About">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="offerings" class="reveal" style="padding: 35px 0 45px;">
+      <h2 style="font-family:Playfair Display,serif;font-size:30px;margin-bottom:28px;text-align:center">Programs & Services</h2>
+      <div class="cards-grid">
+        <div class="card">
+          <img src="https://picsum.photos/seed/s1/800/400" alt="" style="width:100%;border-radius:11px;object-fit:cover;height:132px">
+          <h3>Movement Assessment</h3>
+          <p>Postural analysis & tailored programming to build a safe foundation.</p>
+          <a href="#">Learn more</a>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/s2/800/400" alt="" style="width:100%;border-radius:12px;object-fit:cover;height:140px">
+          <h3>Private Yoga</h3>
+          <p>One-on-one sessions to improve mobility, breath, and mindfulness.</p>
+          <a href="#">Learn more</a>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/s3/800/400" alt="" style="width:100%;border-radius:12px;object-fit:cover;height:140px">
+          <h3>Strength Training</h3>
+          <p>1:1 personalized coaching to build strength safely and sustainably.</p>
+          <a href="#">Learn more</a>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/s4/800/400" alt="" style="width:100%;border-radius:12px;object-fit:cover;height:140px">
+          <h3>Meditation & Journaling</h3>
+          <p>Guided sessions to cultivate calm and reflective practice.</p>
+          <a href="#">Learn more</a>
+        </div>
+        <div class="card">
+          <img src="https://picsum.photos/seed/s5/800/400" alt="" style="width:100%;border-radius:12px;object-fit:cover;height:140px">
+          <h3>Beginner’s Guide PDF</h3>
+          <p>Simple stretch & strengthen program to start at home.</p>
+          <a href="#">Download</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="reveal">
+      <div class="testimonials">
+        <div>
+          <h2 style="font-family:Playfair Display,serif;font-size:26px;margin-bottom:8px">What clients say</h2>
+          <p class="quote">"I finally stopped yo-yo dieting and learned how to build meals that work for my busy schedule. Lost 18 lbs in 4 months without feeling deprived."</p>
+          <div style="margin-top:12px;font-weight:700">— Alex P.</div>
+        </div>
+        <aside class="card" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+          <h3 style="margin:0">Questions?</h3>
+          <div class="logos">
+            <img src="https://picsum.photos/seed/logo1/200/80" alt="logo1">
+            <img src="https://picsum.photos/seed/logo2/200/80" alt="logo2">
+            <img src="https://picsum.photos/seed/logo3/200/80" alt="logo3">
+          </div>
+          <div style="width:100%">
+            <h4 style="margin:0 0 6px">Book a free consult</h4>
+            <p style="color:var(--muted);margin:0 0 12px">15-minute call to review goals and see if we're a good fit.</p>
+            <a class="cta" href="#contact">Schedule call</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <div style="max-width:760px;margin:0 auto;text-align:center">
+        <h2 style="font-family:Playfair Display,serif;font-size:26px">Stay in touch</h2>
+        <p style="color:var(--muted)">Subscribe for tips, program launches, and occasional discounts. No spam.</p>
+        <form class="newsletter" style="margin-top:18px" onsubmit="alert('Demo only — connect a real form provider to collect emails.');return false;">
+          <input type="email" placeholder="Your email" required aria-label="Email address">
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div style="max-width:var(--max);margin:0 auto;padding:10px 24px">  <span id="year"></span> Flex Fitness — Demo. All images are placeholders.</div>
+  </footer>
+
   <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu functionality
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('overlay');
+    const menuLinks = document.querySelectorAll('.menu-link');
+    let menuOpen = false;
+    let lastScrollTop = 0;
+
+    // Toggle mobile menu
     function toggleMenu() {
-      const menu = document.getElementById("mobileMenu");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+      menuOpen = !menuOpen;
+      const isOpen = mobileMenu.classList.toggle('open');
+      overlay.classList.toggle('visible', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+      
+      // Animate hamburger icon
+      const spans = mobileMenuBtn.querySelectorAll('span');
+      if (isOpen) {
+        spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+        spans[1].style.opacity = '0';
+        spans[1].style.transform = 'translateX(20px)';
+        spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[1].style.transform = 'none';
+        spans[2].style.transform = 'none';
+      }
     }
+
+    // Close menu when clicking outside or on overlay
+    function closeMenu() {
+      if (menuOpen) {
+        toggleMenu();
+      }
+    }
+
+    // Event listeners
+    mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+    
+    overlay.addEventListener('click', closeMenu);
+    
+    // Close menu when clicking on a menu link
+    menuLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (menuOpen) {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          toggleMenu();
+          
+          // Small delay to allow menu to close before scrolling
+          setTimeout(() => {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              const headerOffset = 80;
+              const elementPosition = targetElement.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+              
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+              });
+              
+              // Update URL without adding to history
+              history.replaceState(null, null, targetId);
+            }
+          }, 300);
+        }
+      });
+    });
+    
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuOpen) {
+        closeMenu();
+      }
+    });
+    
+    // Removed scroll-based header hiding to keep navigation always visible
+
+    // entrance reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    },{threshold:0.18});
+    reveals.forEach(r=>io.observe(r));
+
+    // Parallax effect removed to prevent image movement on scroll
   </script>
   
-  <!-- Powr Instagram Feed -->
-  <div class="powr-instagram-feed" id="216257c0_1760736896"></div>
-  <script src="https://www.powr.io/powr.js?platform=html"></script>
+  <style>
+    /* Prevent layout shifts during animations */
+    .resize-animation-stopper * {
+      animation: none !important;
+      transition: none !important;
+    }
+  </style>
 </body>
 </html>
