@@ -25,7 +25,7 @@
       color: #0b1220;
       margin: 0;
       background: linear-gradient(180deg, var(--bg), #f3f5ff 120px);
-      padding-top: 80px;
+      padding-top: 0; /* Remove padding since we're using margin on hero */
     }
 
     header.site-nav {
@@ -219,9 +219,13 @@
 
     /* Hero Section */
     .hero {
-      padding: 80px 0 60px;
+      padding: 180px 0 120px; /* Increased height */
       position: relative;
       z-index: 1;
+      min-height: 0;
+      border-radius: 0 0 24px 24px;
+      overflow: hidden;
+      margin-top: 80px; /* Align with nav bottom */
     }
 
     .hero .container {
@@ -414,7 +418,8 @@
     /* Responsive */
     @media (max-width: 768px) {
       .hero {
-        padding: 60px 0 40px;
+        padding: 120px 0 80px; /* Adjusted for mobile */
+        margin-top: 80px;
       }
 
       .hero h1 {
@@ -475,12 +480,13 @@
   <div class="overlay" id="overlay" role="presentation" aria-hidden="true"></div>
 
   <!-- Hero Section -->
-  <section class="hero" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('aboutTrainer.jpg') center/cover no-repeat; color: white;">
+  <section class="hero" style="background: url('aboutTrainer.jpg') center/cover no-repeat; color: white; position: relative;">
     <div class="container">
-      <div class="hero-content">
-        <h1>Meet Your Trainer</h1>
-        <p>Helping you achieve your fitness goals with personalized training and expert guidance</p>
+      <div class="hero-content" style="position: relative; z-index: 2;">
+        <h1 style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Meet Your Trainer</h1>
+        <p style="color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5); max-width: 800px; margin: 0 auto;">Helping you achieve your fitness goals with personalized training and expert guidance</p>
       </div>
+      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.2); z-index: 1;"></div>
     </div>
   </section>
 
