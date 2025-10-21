@@ -22,7 +22,7 @@
 
     /* Header */
     body {
-      padding-top: 10px; /* Reduced padding to decrease space between header and content */
+      padding-top: 80px;
     }
     
     header.site-nav {
@@ -37,12 +37,81 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-    .nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 20px}
-    .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
-    .brand .mark{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent-a),var(--accent-b));display:grid;place-items:center;color:white;font-weight:700;font-family:Playfair Display}
-    nav.links{display:flex;gap:18px;align-items:center}
-    nav.links a{color:rgba(11,18,32,0.85);text-decoration:none;font-weight:600}
-    .cta{padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#fff;text-decoration:none;font-weight:700}
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand .mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,var(--accent-a),var(--accent-b));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+    }
+
+    .brand-text .brand-title {
+      font-weight: 700;
+      font-size: 18px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .brand-text .brand-subtitle {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    nav.links { 
+      display: flex; 
+      gap: 18px; 
+      align-items: center; 
+    }
+
+    nav.links a {
+      color: rgba(11,18,32,0.85);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.2s ease;
+    }
+
+    nav.links a:hover {
+      color: var(--accent-a);
+    }
+
+    .cta {
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(92, 106, 196, 0.2);
+    }
 
     /* Fluid hero (asymmetrical) */
     /* Hero Section */
@@ -595,7 +664,7 @@
 
   <header class="site-nav">
     <div class="nav-inner">
-      <a class="brand" href="#" aria-label="Flex Fitness Home">
+      <a class="brand" href="index.html" aria-label="Flex Fitness Home">
         <div class="mark">F</div>
         <div class="brand-text">
           <div class="brand-title">Flex Fitness</div>
@@ -603,10 +672,10 @@
         </div>
       </a>
       <nav class="links" aria-label="Primary Navigation">
-        <a href="#about">About</a>
-        <a href="#offerings">Offerings</a>
-        <a href="#testimonials">Testimonials</a>
-        <a href="#contact" class="cta">Book Now</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="offerings.html">Offerings</a>
+        <a href="book.html" class="cta">Book Now</a>
       </nav>
       <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
@@ -618,10 +687,10 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile Navigation">
-    <a href="#about" class="menu-link">About</a>
-    <a href="#offerings" class="menu-link">Offerings</a>
-    <a href="#testimonials" class="menu-link">Testimonials</a>
-    <a href="#contact" class="cta menu-link">Book Now</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="offerings.html">Offerings</a>
+    <a href="book.html" class="cta">Book Now</a>
   </div>
   <div class="overlay" id="overlay" role="presentation" aria-hidden="true"></div>
 
