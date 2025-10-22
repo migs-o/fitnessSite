@@ -143,22 +143,27 @@
       display: none;
       flex-direction: column;
       justify-content: space-between;
-      width: 40px;
-      height: 28px;
+      align-items: center;
       background: none;
       border: none;
       cursor: pointer;
-      padding: 0;
+      padding: 12px 8px;
       z-index: 1001;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+      appearance: none;
+      -webkit-appearance: none;
     }
-
+    
     .mobile-menu-btn span {
       display: block;
-      width: 100%;
+      width: 24px;
       height: 3px;
       background: var(--accent-a);
       border-radius: 3px;
       transition: all 0.3s ease;
+      transform-origin: center;
     }
 
     .mobile-menu {

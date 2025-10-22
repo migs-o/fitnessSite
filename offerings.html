@@ -139,6 +139,7 @@
       display: none;
       flex-direction: column;
       justify-content: space-between;
+      align-items: center;
       background: none;
       border: none;
       cursor: pointer;
@@ -146,15 +147,19 @@
       z-index: 1001;
       width: 40px;
       height: 40px;
+      margin: 0;
+      appearance: none;
+      -webkit-appearance: none;
     }
     
     .mobile-menu-btn span {
       display: block;
-      width: 100%;
+      width: 24px;
       height: 3px;
       background: var(--accent-a);
       border-radius: 3px;
       transition: all 0.3s ease;
+      transform-origin: center;
     }
     
     /* Mobile Menu */
