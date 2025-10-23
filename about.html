@@ -690,6 +690,11 @@
         toggleMenu();
       }
     }
+    
+    // Touch event variables
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const SWIPE_THRESHOLD = 50; // Minimum distance to trigger swipe
   
     // Event listeners
     mobileMenuBtn.addEventListener('click', (e) => {
@@ -697,7 +702,30 @@
       toggleMenu();
     });
     
-    overlay.addEventListener('click', closeMenu);
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (menuOpen && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        closeMenu();
+      }
+    });
+    
+    // Touch start handler for swipe detection
+    mobileMenu.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    // Touch end handler for swipe detection
+    mobileMenu.addEventListener('touchend', (e) => {
+      if (!menuOpen) return;
+      
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - touchStartX;
+      
+      // If swiped right more than threshold, close the menu
+      if (swipeDistance > SWIPE_THRESHOLD) {
+        closeMenu();
+      }
+    }, { passive: true });
     
     // Close menu when clicking on a menu link
     menuLinks.forEach(link => {
